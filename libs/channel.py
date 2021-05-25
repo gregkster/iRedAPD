@@ -313,7 +313,8 @@ class SRS(asynchat.async_chat):
             if line.startswith('get '):
                 addr = line.strip().split(' ', 1)[-1]
 
-                if utils.is_email(addr):
+                valid_email,error_string = utils.is_email_srs(addr)
+                if valid_email:
                     domain = addr.split('@', 1)[-1]
 
                     if self.rewrite_address_type == 'sender':
@@ -325,8 +326,8 @@ class SRS(asynchat.async_chat):
                         logger.debug(self.log_prefix + reply)
                         self.push(reply)
                 else:
-                    logger.debug(self.log_prefix + 'Not a valid email address, bypassed.')
-                    self.push(TCP_REPLIES['not_exist'] + 'Not a valid email address, bypassed.')
+                    logger.debug(self.log_prefix + 'Not a valid email address: ' + error_string)
+                    self.push(TCP_REPLIES['not_exist'] + 'Not a valid email address: ' + error_string)
             else:
                 logger.debug(self.log_prefix + 'Unexpected input: {0}'.format(line))
                 self.push(TCP_REPLIES['not_exist'] + 'Unexpected input: {0}'.format(line))

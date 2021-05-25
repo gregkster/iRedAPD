@@ -18,6 +18,7 @@ from libs import PLUGIN_PRIORITIES, ACCOUNT_PRIORITIES
 from libs import SMTP_ACTIONS
 from libs import regxes
 from libs import ipaddress
+from libs import email_validator
 import settings
 
 if settings.backend == 'ldap':
@@ -104,6 +105,14 @@ def is_email(s):
 
     return False
 
+def is_email_srs(s):
+    try:
+        email = str(s).strip()
+        valid = email_validator.validate_email(email, check_deliverability=False)
+    except email_validator.EmailNotValidError as e:
+        return False, str(e)
+
+    return True, ""
 
 def is_tld_domain(s):
     s = str(s)
