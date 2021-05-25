@@ -34,7 +34,9 @@ ATEXT_HOSTNAME = r'(?:(?:[a-zA-Z0-9][a-zA-Z0-9\-]*)?[a-zA-Z0-9])'
 # RFC 3696 + errata 1003 + errata 1690 (https://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690)
 # explains the maximum length of an email address is 254 octets.
 EMAIL_MAX_LENGTH = 254
-LOCAL_PART_MAX_LENGTH = 64
+# SRSlib seems to violate this spec freely, so roll with it, otherwise can't reverse the rewritten addresses
+# LOCAL_PART_MAX_LENGTH = 64
+LOCAL_PART_MAX_LENGTH = 250
 DOMAIN_MAX_LENGTH = 255
 
 # ease compatibility in type checking
