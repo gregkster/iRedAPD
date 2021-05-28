@@ -326,8 +326,8 @@ class SRS(asynchat.async_chat):
                         logger.debug(self.log_prefix + reply)
                         self.push(reply)
                 else:
-                    logger.debug(self.log_prefix + 'Not a valid email address: ' + error_string)
+                    logger.info(self.log_prefix + 'Not a valid email address: ' + error_string)
                     self.push(TCP_REPLIES['not_exist'] + 'Not a valid email address: ' + error_string)
             else:
-                logger.debug(self.log_prefix + 'Unexpected input: {0}'.format(line))
+                logger.info(self.log_prefix + 'Unexpected input: {0}'.format(line))
                 self.push(TCP_REPLIES['not_exist'] + 'Unexpected input: {0}'.format(line))
